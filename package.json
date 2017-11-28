@@ -1,0 +1,23 @@
+{
+  "name": "phalcon",
+  "version": "1.0.0",
+  "description": "A fast web framework for NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phalconjs/phalcon.git"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Chidume Nnamdi <kurtwanger40@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phalconjs/phalcon/issues"
+  },
+  "homepage": "https://github.com/phalconjs/phalcon#readme"
+}
