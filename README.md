@@ -1,4 +1,5 @@
-()[phalcon.jpg]
+![](phalcon.jpg)
+
 A fast web framework for Nodejs
 
 # Basic Usage
