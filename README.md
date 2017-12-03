@@ -17,36 +17,36 @@ npm install phalcon --save
 ```
 # Examples
 To run the examples.
-* 1. Clone the repo:
+1. Clone the repo:
 
         git clone git://github.com/phalconjs/phalcon.git
 
-* 1. Move into the `phalcon` directory from the terminal:
+1. Move into the `phalcon` directory from the terminal:
 
         cd phalcon
 
-* 1. Install the dependencies:
+1. Install the dependencies:
 
         npm install
 
-* 1. To run any example you want:
+1. To run any example you want:
 
         node examples/<example-dir>
 
 # Test
 To run the test.
-* 1. Clone the repo:
+1. Clone the repo:
 
         git clone git://github.com/phalconjs/phalcon.git
 
-* 1. Move into the `phalcon` directory from the terminal:
+1. Move into the `phalcon` directory from the terminal:
 
         cd phalcon
 
-* 1. Install the dependencies:
+1. Install the dependencies:
 
         npm install
 
-* 1. Run:
+1. Run:
         npm test
 
