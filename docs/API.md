@@ -6,7 +6,7 @@
 * express.Router()
 * express.urlencoded()
 
-#Application
+# Application
 
 ## Properties
 app.locals
@@ -37,6 +37,7 @@ app.set()
 app.use()
 
 # Request
+
 ## Properties
 req.app
 req.baseUrl
@@ -71,7 +72,7 @@ req.range()
 
 # Response
 
-##Properties
+## Properties
 res.app
 res.headersSent
 res.locals
@@ -99,7 +100,8 @@ res.status()
 res.type()
 res.vary()
 
-#Router
+# Router
+
 ## `Methods`
 router.all()
 router.METHOD()
