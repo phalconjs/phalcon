@@ -1,6 +1,6 @@
 # express()
 
-## Methods
+## `Methods`
 * express.json()
 * express.static()
 * express.Router()
@@ -8,14 +8,14 @@
 
 # Application
 
-## Properties
+## `Properties`
 app.locals
 app.mountpath
 
-## Events
+## `Events`
 mount
 
-## Methods
+## `Methods`
 app.all()
 app.delete()
 app.disable()
@@ -38,7 +38,7 @@ app.use()
 
 # Request
 
-## Properties
+## `Properties`
 req.app
 req.baseUrl
 req.body
@@ -60,7 +60,7 @@ req.stale
 req.subdomains
 req.xhr
 
-## Methods
+## `Methods`
 req.accepts()
 req.acceptsCharsets()
 req.acceptsEncodings()
@@ -72,12 +72,12 @@ req.range()
 
 # Response
 
-## Properties
+## `Properties`
 res.app
 res.headersSent
 res.locals
 
-## Methods
+## `Methods`
 res.append()
 res.attachment()
 res.cookie()
