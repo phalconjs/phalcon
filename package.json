@@ -1,28 +1,32 @@
 {
-    "name": "phalcon",
-    "version": "1.0.0",
-    "description": "A fast web framework for NodeJS",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node test/test.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/phalconjs/phalcon.git"
-    },
-    "keywords": [
-        "nodejs",
-        "javascript"
-    ],
-    "author": "Chidume Nnamdi <kurtwanger40@gmail.com>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/phalconjs/phalcon/issues"
-    },
-    "homepage": "https://github.com/phalconjs/phalcon#readme",
-    "dependencies": {
-        "merge-descriptors": "^1.0.1",
-        "methods": "^1.1.2"
-    }
+  "name": "phalcon",
+  "version": "1.0.0",
+  "description": "A fast web framework for NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phalconjs/phalcon.git"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Chidume Nnamdi <kurtwanger40@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phalconjs/phalcon/issues"
+  },
+  "homepage": "https://github.com/phalconjs/phalcon#readme",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "events": "^1.1.1",
+    "http": "0.0.0",
+    "merge-descriptors": "^1.0.1",
+    "methods": "^1.1.2",
+    "setprototypeof": "^1.1.0"
+  }
 }
