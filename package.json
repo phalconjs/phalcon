@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/phalconjs/phalcon#readme",
   "dependencies": {
+    "array-flatten": "^2.1.1",
     "chalk": "^2.3.0",
     "events": "^1.1.1",
     "http": "0.0.0",
