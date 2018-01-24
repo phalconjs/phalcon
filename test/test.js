@@ -30,8 +30,24 @@ const router = phalcon.Router()
 router.get('get', ()=>{})
 router.route('dogs')
     .get(()=>{});
-router.use('cat)    
+router.use('cat', ()=>{})    
 
 app.use(router)
 app.listen(3000);
+*/
+
+/*
+const server = phalcon.Server();
+
+server.route({
+    path: '',
+    method: GET,
+    handler: () => {}
+})
+
+server.start({
+    host: localhost,
+    port: 3000,
+    handler: () => {}
+})
 */
