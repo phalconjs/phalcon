@@ -27,12 +27,24 @@ var app = new phalcon();
 //Creates a new router object
 const router = phalcon.Router()
 
-router.get('get', ()=>{})
+router.get('cow', ()=>{})
 router.route('dogs')
     .get(()=>{});
 router.use('cat', ()=>{})    
+[
+    Routes: 
+    [
+        cow => func,
+        dogs => func
+    ]
+    Middlewares: 
+    [
+        cat => function
+    ]
+]
 
 app.use(router)
+app.use('goat', router)
 app.listen(3000);
 */
 
