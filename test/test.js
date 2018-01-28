@@ -2,16 +2,23 @@ var chalk = require('chalk')
 var phalcon = require('../lib/phalcon');
 
 var app = new phalcon();
+
+/* set router */
 var router = phalcon.Router()
+router.get('/cow', (req, res) => { res.send('from router (cow)') })
+router.route('/dogs')
+    .get((req, res) => { res.send('from router (dogs)') });
+app.use('/goat', router)
 
 /* set middlewares*/
+/*
 app.use((req, res) => { console.log('mw 1') })
 app.use('cat', (req, res) => { console.log('mw 2') })
 app.use(['dog', 'beetle'], (req, res) => { console.log('mw 3') }, (req, res) => { console.log('mw 3') })
 app.use(['lion'], [(req, res) => { console.log('mw 4') }, (req, res) => { console.log('mw 4') }])
 app.use([(req, res) => { console.log('mw 5') }])
 app.use((req, res) => { console.log('mw 6') }, (req, res) => { console.log('mw 6') })
-
+*/
 app.get('/', (req, res) => {
     res.send('Hello World form PhalconJS');
 });
