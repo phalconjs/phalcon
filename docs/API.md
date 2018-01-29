@@ -16,6 +16,7 @@ app.mountpath
 mount
 
 ## `Methods`
+
 app.all()
 app.delete()
 app.disable()
