@@ -79,7 +79,7 @@ phalcon.cors({
     methods: ['GET'],
     allowedHeader: ["Content-Type", "Authorization"]
 })
-phalocn.cors()
+phalcon.cors()
 
 phalcon.compression()
 
