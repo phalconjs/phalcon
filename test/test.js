@@ -3,7 +3,7 @@ var phalcon = require('../lib/phalcon');
 
 var app = new phalcon();
 
-/* set router */
+/* set router object */
 var router = phalcon.Router()
 router.get('/cow', (req, res) => { res.send('from router (cow)') })
 router.route('/dogs')
@@ -70,3 +70,19 @@ server.start({
     handler: () => {}
 })
 */
+
+phalcon.auth('basic', 'basic', () => {})
+phalcon.auth('jwt', 'jwt', () => {})
+
+phalcon.cors({
+    origin: ['localhost:3000'],
+    methods: ['GET'],
+    allowedHeader: ["Content-Type", "Authorization"]
+})
+phalocn.cors()
+
+phalcon.compression()
+
+phalcon.serve_static('/static/*')
+
+phalcon.log()
