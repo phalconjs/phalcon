@@ -71,6 +71,7 @@ server.start({
 })
 */
 
+/*
 phalcon.auth('basic', 'basic', () => {})
 phalcon.auth('jwt', 'jwt', () => {})
 
@@ -86,3 +87,4 @@ phalcon.compression()
 phalcon.serve_static('/static/*')
 
 phalcon.log()
+*/
