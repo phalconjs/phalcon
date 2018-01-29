@@ -11,14 +11,14 @@ router.route('/dogs')
 app.use('/goat', router)
 
 /* set middlewares*/
-/*
+
 app.use((req, res) => { console.log('mw 1') })
 app.use('cat', (req, res) => { console.log('mw 2') })
 app.use(['dog', 'beetle'], (req, res) => { console.log('mw 3') }, (req, res) => { console.log('mw 3') })
 app.use(['lion'], [(req, res) => { console.log('mw 4') }, (req, res) => { console.log('mw 4') }])
 app.use([(req, res) => { console.log('mw 5') }])
 app.use((req, res) => { console.log('mw 6') }, (req, res) => { console.log('mw 6') })
-*/
+
 app.get('/', (req, res) => {
     res.send('Hello World form PhalconJS');
 });
