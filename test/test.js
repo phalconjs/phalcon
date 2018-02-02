@@ -20,7 +20,7 @@ app.use([(req, res) => { console.log('mw 5') }])
 app.use((req, res) => { console.log('mw 6') }, (req, res) => { console.log('mw 6') })
 
 app.get('/', (req, res) => {
-    res.send('Hello World form PhalconJS');
+    res.send('Hello World from PhalconJS');
 });
 app.listen(3000, () => {
     console.log(chalk.green(`App started on port:`) + chalk.yellow(3000))
