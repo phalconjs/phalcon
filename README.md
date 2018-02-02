@@ -4,11 +4,11 @@ A fast web framework for Nodejs
 
 # Basic Usage
 ```javascript
-var phalcon = require('phalcon');
+var phalcon = require("phalcon");
 var app = new phalcon();
 
-app.get('/', (req, res) => {
-    res.send('Hello World form PhalconJS');
+app.get("/", (req, res) => {
+    res.send("Hello World from PhalconJS");
 });
 app.listen(3000);
 ```
@@ -51,7 +51,7 @@ To run the test.
 1. Run:
         npm test
 
-# Auth Schemes and Strategies
+# Auth Schemes and Strategies to be added
 
 * **HTTP Basic Authentication (default)**: The client will use the HTTP Authorization header to send an encoded version of the API Key using the HTTP Basic Authentication standard. The username part is the value of the API Key and the password part should be blank (empty string). Use the value basic for the key APIKeyAuthType to use this strategy.
 

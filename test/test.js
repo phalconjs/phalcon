@@ -71,20 +71,25 @@ server.start({
 })
 */
 
-/*
-phalcon.auth('basic', 'basic', () => {})
-phalcon.auth('jwt', 'jwt', () => {})
+phalcon = require('./../lib')
+app = phalcon()
 
-phalcon.cors({
+/** deifnes your authentication strategy and schemes */
+app.auth('basic', 'basic', () => {})
+app.auth('jwt', 'jwt', () => {})
+
+/** allows a cross-orgin browser requests */
+app.cors({
     origin: ['localhost:3000'],
     methods: ['GET'],
     allowedHeader: ["Content-Type", "Authorization"]
 })
-phalcon.cors()
+app.cors()
 
-phalcon.compression()
+app.compression()
 
-phalcon.serve_static('/static/*')
+/** serves the static files like html, css etc */
+app.serve_static('/static/*')
 
-phalcon.log()
-*/
+/** logs html requests */
+app.log()
