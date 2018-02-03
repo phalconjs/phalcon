@@ -1,7 +1,7 @@
 var chalk = require('chalk')
-var phalcon = require('../lib/phalcon');
+const phalcon = require('../lib/phalcon');
 
-var app = new phalcon();
+const app = new phalcon.Server();
 
 /* set router object */
 var router = phalcon.Router()
