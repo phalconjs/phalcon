@@ -1,15 +1,37 @@
 ![](phalcon.jpg)
 
-A fast web framework for Nodejs
+A fast web framework for Nodejs heavily insipred by `Express.js`, `Hapi.js` and `Restify.js`.
 
 # Basic Usage
 ```javascript
-var phalcon = require("phalcon");
-var app = new phalcon();
+const phalcon = require("phalcon");
+const app = new phalcon();
+
+/** setting up routes **/
+app.route({
+    method: 'GET',
+    path: '/pot',
+    handler: (req, res) => { res.send('app.route calls') }
+})
+app.route([{
+        path: '/kettle',
+        method: 'POST',
+        handler: (req, res) => { res.send('from keetle POST') }
+    },
+    {
+        path: '/frigde',
+        method: 'GET',
+        handler: (req, res) => {
+            res.send('from frigde GET request')
+        }
+    }
+])
 
 app.get("/", (req, res) => {
     res.send("Hello World from PhalconJS");
 });
+
+/** start the server**/
 app.listen(3000);
 ```
 # Installation

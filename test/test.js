@@ -22,6 +22,24 @@ app.use((req, res) => { console.log('mw 6') }, (req, res) => { console.log('mw 6
 app.get('/', (req, res) => {
     res.send('Hello World from PhalconJS');
 });
+app.route({
+    method: 'GET',
+    path: '/pot',
+    handler: (req, res) => { res.send('app.route calls') }
+})
+app.route([{
+        path: '/kettle',
+        method: 'POST',
+        handler: (req, res) => { res.send('from keetle POST') }
+    },
+    {
+        path: '/frigde',
+        method: 'GET',
+        handler: (req, res) => {
+            res.send('from frigde GET request')
+        }
+    }
+])
 app.listen(3000, () => {
     console.log(chalk.green(`App started on port:`) + chalk.yellow(3000))
 });
