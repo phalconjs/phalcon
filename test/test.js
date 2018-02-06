@@ -6,6 +6,24 @@ const app = new phalcon.Server();
 /* set router object */
 var router = phalcon.Router()
 router.get('/cow', (req, res) => { res.send('from router (cow)') })
+router.route({
+    path: '/turtle',
+    method: 'GET',
+    handler: (req, res) => { res.send('from app Router turtle') }
+})
+router.route([{
+        path: '/wolf',
+        method: 'POST',
+        handler: (req, res) => { res.send('from app Router wolf POST') }
+    },
+    {
+        path: '/fox',
+        method: 'GET',
+        handler: (req, res) => {
+            res.send('from app Router fox GET request')
+        }
+    }
+])
 router.route('/dogs')
     .get((req, res) => { res.send('from router (dogs)') });
 app.use('/goat', router)

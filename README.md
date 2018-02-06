@@ -32,6 +32,31 @@ app.route([{
     }
 ])
 
+/* set router object */
+const router = phalcon.Router()
+router.get('/cow', (req, res) => { res.send('from router (cow)') })
+router.route({
+        path: '/turtle',
+        method: 'GET',
+        handler: (req, res)=>{res.send('from app Router turtle')}
+})
+router.route([{
+        path: '/wolf',
+        method: 'POST',
+        handler: (req, res) => { res.send('from keetle POST') }
+    },
+    {
+        path: '/fox',
+        method: 'GET',
+        handler: (req, res) => {
+            res.send('from frigde GET request')
+        }
+    }
+])
+router.route('/dogs')
+    .get((req, res) => { res.send('from router (dogs)') });
+app.use('/goat', router)
+
 app.get("/", (req, res) => {
     res.send("Hello World from PhalconJS");
 });
