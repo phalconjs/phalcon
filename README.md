@@ -6,6 +6,7 @@ A fast web framework for Nodejs heavily insipred by `Express.js`, `Hapi.js` and 
 ```javascript
 const phalcon = require("phalcon");
 const app = new phalcon.Server();
+const router = phalcon.Router()
 
 /** setting up routes **/
 app.route({
@@ -33,7 +34,6 @@ app.route([{
 ])
 
 /* set router object */
-const router = phalcon.Router()
 router.get('/cow', (req, res) => { res.send('from router (cow)') })
 router.route({
         path: '/turtle',
