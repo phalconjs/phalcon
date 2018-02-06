@@ -25,7 +25,12 @@ app.get('/', (req, res) => {
 app.route({
     method: 'GET',
     path: '/pot',
-    handler: (req, res) => { res.send('app.route calls') }
+    handler: (req, res) => { res.send('/pot app.route calls') }
+})
+app.route({
+    method: ['POST', 'GET'],
+    path: '/sands',
+    handler: (req, res) => { res.send('/sands app.route calls') }
 })
 app.route([{
         path: '/kettle',

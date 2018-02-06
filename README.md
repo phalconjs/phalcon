@@ -5,13 +5,18 @@ A fast web framework for Nodejs heavily insipred by `Express.js`, `Hapi.js` and 
 # Basic Usage
 ```javascript
 const phalcon = require("phalcon");
-const app = new phalcon();
+const app = new phalcon.Server();
 
 /** setting up routes **/
 app.route({
     method: 'GET',
     path: '/pot',
     handler: (req, res) => { res.send('app.route calls') }
+})
+app.route({
+    method: ['POST', 'GET'],
+    path: '/sands',
+    handler: (req, res) => { res.send('/sands app.route calls') }
 })
 app.route([{
         path: '/kettle',
