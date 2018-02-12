@@ -5,3 +5,7 @@ curl --request POST \
 
 curl --request GET \
   --url http://localhost:3000
+
+curl --request GET \
+  --url http://localhost:3000/cheta
+  

@@ -40,6 +40,11 @@ app.use((req, res) => { console.log('mw 6') }, (req, res) => { console.log('mw 6
 app.get('/', (req, res) => {
     res.send('Hello World from PhalconJS');
 });
+
+/** setting middlewares in route path */
+app.get('/cheta', [(req, res) => { console.log('cheta by Ada') }, (req, res) => { console.log('cheta by AdaEhi') }], (req, res) => {
+    res.send('Never forget')
+})
 app.route({
     method: 'GET',
     path: '/pot',
@@ -139,3 +144,13 @@ app.serve_static('/static/*')
 /*
 app.log()
 */
+
+
+
+app.register('auth', 'cors', 'log', 'compression')
+app.register({
+    type: 'serve-static',
+    config: {
+        path: '/static'
+    }
+})

@@ -1,6 +1,6 @@
 ![](phalcon.jpg)
 
-A fast web framework for Nodejs heavily insipred by `Express.js`, `Hapi.js` and `Restify.js`.
+A fast web framework for Node.js heavily insipred by `Express.js`, `Hapi.js` and `Restify.js`.
 
 # Basic Usage
 ```javascript
@@ -61,6 +61,11 @@ app.get("/", (req, res) => {
     res.send("Hello World from PhalconJS");
 });
 
+/** setting middlewares in route path */
+app.get('/cheta', [(req, res) => { console.log('cheta by Ada') }, (req, res) => { console.log('cheta by AdaEhi') }], (req, res) => {
+    res.send('Never forget')
+})
+
 /** start the server**/
 app.listen(3000);
 ```
@@ -69,7 +74,7 @@ app.listen(3000);
 npm install phalcon --save
 ```
 # Examples
-To run the examples.
+To run the examples:
 1. Clone the repo:
 
         git clone git://github.com/phalconjs/phalcon.git
@@ -87,7 +92,7 @@ To run the examples.
         node examples/<example-dir>
 
 # Test
-To run the test.
+To run the test:
 1. Clone the repo:
 
         git clone git://github.com/phalconjs/phalcon.git
@@ -103,7 +108,7 @@ To run the test.
 1. Run:
         npm test
 
-# Auth Schemes and Strategies to be added
+# Auth Schemes and Strategies to be implemented
 
 * **HTTP Basic Authentication (default)**: The client will use the HTTP Authorization header to send an encoded version of the API Key using the HTTP Basic Authentication standard. The username part is the value of the API Key and the password part should be blank (empty string). Use the value basic for the key APIKeyAuthType to use this strategy.
 
