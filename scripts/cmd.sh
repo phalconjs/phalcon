@@ -7,5 +7,5 @@ curl --request GET \
   --url http://localhost:3000
 
 curl --request GET \
-  --url http://localhost:3000/cheta
+  --url http://localhost:4000
   

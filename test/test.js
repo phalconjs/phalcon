@@ -41,6 +41,8 @@ app.get('/', (req, res) => {
     res.send('Hello World from PhalconJS');
 });
 
+app.log()
+
 /** setting middlewares in route path */
 app.get('/cheta', [(req, res) => { console.log('cheta by Ada') }, (req, res) => { console.log('cheta by AdaEhi') }], (req, res) => {
     res.send('Never forget')
@@ -68,8 +70,9 @@ app.route([{
         }
     }
 ])
-app.listen(3000, () => {
-    console.log(chalk.green(`App started on port:`) + chalk.yellow(3000))
+let port = 4000
+app.listen(port, () => {
+    console.log(chalk.green(`App started on port:`) + chalk.yellow(port))
 });
 
 /*
