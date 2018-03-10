@@ -1,3 +1,17 @@
+/**
+ * Author: Chidume Nnamdi
+ */
+
+/**
+ * let ob = Rx.Observable.create((observer)=>{
+ *  observer.onNext(42)
+ *  observer.onCompleted()
+ * })
+ * 
+ * ob.subscribe((v)=>{
+ *  console.log(v)
+ * })
+ */
 class Subject {
 
 }
@@ -14,24 +28,35 @@ class Observer {
     onError() {
 
     }
-    omCompleted() {
+    onCompleted() {
 
     }
 }
 
 class Observable {
+
     static observers = []
-    static create() {}
+    static registered = []
+
+    constructor() {}
+
+    static create(fn) {
+        Observable.registered.push(fn)
+    }
+
     static from() {
 
     }
+
     map() {
 
     }
+
     filter() {
 
     }
-    subscribe() {
+
+    subscribe(obj) {
 
     }
 }

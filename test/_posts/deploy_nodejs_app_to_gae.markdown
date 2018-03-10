@@ -31,21 +31,444 @@ Google Cloud tools is a bag full of utilities all very useful in setting up and 
 
 Google Cloud SDK contains tools like `gcloud`, and `gsutil`, but we will be using the `gcloud` tool to initialize and deploy our app.
 
-The gcloud tool contain various commands to enable perfomrm different actions on our GCP:
+The `gcloud` tool contain various commands to enable perfomrm different actions on our GCP:
 
-* **gcloud info**:
-* **gcloud auth list**:
-* **gcloud init**:
-* **gcloud info**:
-* **gcloud config list**
+* **gcloud info**: Displays information about your Cloud SDK, your system, the logged in user and the current active project.
+* **gcloud auth list**: Displays list of Google accounts active in the Cloud SDK.
+* **gcloud init**: initializes a Google cloud Project.
+* **gcloud help**: Displays commands available in `gcloud` and their usage.
+* **gcloud config list** Displays the list of the `gcloud` configurations.
 
 Ok, we have digressed a little bit, lets come back to what we have in hand, after downloading the Cloud SDK instaler, launch the installer and follow the prompts, make sure you check relevant optins presented. After the installation has completed the installer will launch the command `gcloud init` in a terminal window.
 
+This command will take you through series of configuration. IT will present you option to log in:
+
+```sh
+You must log in to continue. Would you like to log in (Y/n)?
+```
+Type `Y` and hit the Enter key. It will launch  a web browser, where you will select your google account. After that, it will display on the terminal list of your Google projects:
+
+```sh
+You are logged in as [YOUR_GOOGLE_ACCOUNT_EMAIL_HERE]:
+
+pick cloud project to use:
+ [1] [PROJECT_NAME_I]
+ [2] Create a new project
+Please enter numeric choice or text value (must exactly match list item):
+```
+**NB**: `gcloud` will automatically select, if you have only one project.
+
+Next, you are prompted to choose a default Compute Engine zone:
+
+```sh
+Which Google Compute Engine zone would you like to use project default:
+ [1] us-east1-b
+ [45] Do not select default zone
+Please enter numeric choice or text value (must exactly match list item):
+```
+After selecting your default zone, `gcloud` does a series of checks and prints out:
+
+```sh
+Your project defauly Compute Engine zone has been set to [YOUR_CHOICE_HERE]
+You can change it by running [gcloud config set compute/zone NAME]
+
+Your project default Compute Engine region has been set to [YOUR_CHOICE_HERE]
+You can change it by running [gcloud config set compute/region NAME]
+```
+Your Google Cloud SDK is configured and ready to use !!
 
 ## Setup our Nodejs app.
+
+Now, our Google cloud project has been configured. Let's setup our Nodejs app. We are going to create a RESTful API for **Black Panther**. Wooh!!! This will be great, on **Feb 16, 2018** the first **Marvel** black superhero movie was premiered in cinemas around the world garnering a massive **$903 Million** in Box office, making it the 45th Highest grossing movie of all time and highest grossing movie in the year 2018.
+
+Let's build an API that will return the characters of the **Black Panther**.
+
+#### API endpoint
+
+1. **Character** - This resource is about the Black Panther characters.
+
+    * POST - /blackpanther/  Creates a new Black Panther instance.
+    * GET - /blackpanthers/  Returns all Black Panther characters.
+    * GET - /blackpanther/`<id>`  Returns the specified Black Panther character id.
+    * PUT - /blackpanther/`<id>`  Update a Black Panther character attributes.
+    * DELETE - /blackpanther/`<id>`  Delete a Black Panther character.
+
+#### **Black Panther** Character Model Structure
+
+```json
+    "alias": String,
+    "occupation": String,
+    "gender": String,
+    "place_of_birth": String,
+    "abilities": String,
+    "played_by": String,
+    "image_path": String
+```
+
 ## Create API endpoints (**Black Panther API**).
+
+To start off, lets start by creating our project folder, open your terminal and run the following command:
+
+```sh
+mkdir _nodejs_gae
+```
+
+Next, move into the folder:
+
+```sh
+cd _nodejs_gae
+```
+Nodejs app are initialized using the `npm init` command. Now, we are inside our projcet folder, run the following commad to instantiate a Nodejs app:
+
+```sh
+npm init -y
+```
+This commands creates a Nodejs app using your pre-configured credentials. By now your folder will be looking like this:
+
+```
+|-_nodejs_gae
+    |-package.json
+```
+
+To follow best practices, we are going to divide our app into Controllers, Models and Routes. Yeah, I know it's overkill for this demo app but it is always good to do it right.
+
+Let's create our `index.js` file (our server entry-point) - `touch index.js`
+
+Create the following folders:
+
+* mkdir routes
+* mkdir ctrls
+* mkdir models
+
+We now have `routes`, `ctrls`, and `models` folders.
+
+* **routes**: will hold all the routes defined in our API and it will call the controller function assigned to the matching HTTP request.
+* **ctrls**: will hold the action to get the requested data from the models.
+* **models**: will hold the Database Model of our API.
+
+We are going to have one route, one model and, one controller associated to our API. Run the following commands to create the files:
+
+* touch routes/route.js
+* touch ctrls/ctrl.js
+* touch models/Character.js
+
+Our folder structure should look like this now:
+
+```
+|-_nodejs_gae
+    |- routes/
+        |- route.js
+    |- ctrls/
+        |- ctrl.js
+    |- models/
+        |- Character.js
+    |- index.js
+    |- package.json
+```
+
+Ok, we are now set, let's install our dependencies:
+
+* npm i express -S
+* npm i mongoose -S
+* npm i body-parser -S
+
+We now, open up our `Character.js` and paste the following code into it:
+
+```js
+const mongoose = require('mongoose')
+
+let Character = new mongoose.Schema({
+    alias: String,
+    occupation: String,
+    gender: String,
+    place_of_birth: String,
+    abilities: String,
+    played_by: String,
+    image_path: String
+})
+module.exports = mongoose.model('Character', Character)
+```
+Here, we declared our model schema `Character` using `mongoose` Schema class. Our model was the exported, so that we can import and use the Schema anywhere in our app.
+
+Ok, let's add code to our `ctrl.js` file:
+
+```js
+const Character = require('./../models/Character')
+
+module.exports = {
+    getCharacter: (req, res, next) => {
+        Character.findById(req.params.id, (err, Character) => {
+            if (err)
+                res.send(err)
+            else if (!Character)
+                res.send(404)
+            else
+                res.send(Character)
+            next()
+        })
+    },
+    getAllCharacters: (req, res, next) => {
+        Character.find((err, data) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(data)
+            }
+            next()
+        })
+    },
+    deleteCharacter: (req, res, next) => {
+        Character.findByIdAndRemove(req.params.id, (err) => {
+            if (err)
+                res.send(err)
+            else
+                res.sendStatus(204)
+            next()
+        })
+    },
+    addCharacter: (req, res, next) => {
+        (new Character(req.body)).save((err, newCharacter) => {
+            if (err)
+                res.send(err)
+            else if (!newCharacter)
+                res.send(400)
+            else
+                res.send(newCharacter)
+            next()
+        })
+    },
+    updateCharacter: (req, res, next) => {
+        Character.findByIdAndUpdate(req.params.id, req.body, (err, updatedCharacter) => {
+            if (err)
+                res.send(err)
+            else if (!updatedCharacter)
+                res.send(400)
+            else
+                res.send(req.body)
+            next()
+        })
+    }
+}
+```
+Here, declared our 4 `CRUD`y functions: `getCharacter`, `deleteCharacter`, `getAllCharaccters`, and `updateCharacter`. Like their names implies they perform `CREATE`, `READ`, `UPDATE` and `DELETE` actions on our **Black Panther** API.
+
+OK, let's open up the `route.js` file and paste the following code in it:
+
+```js
+const ctrl = require('./../ctrls/ctrl')
+
+module.exports = (router) => {
+
+    /** get all Black Panther characters */
+    router
+        .route('/blackpanthers')
+        .get(ctrl.getAllCharacters)
+
+    /** save a Black Panther character */
+    router
+        .route('/blackpanther')
+        .post(ctrl.addCharacter)
+
+    /** get a Black Panther character */
+    router
+        .route('/blackpanther/:id')
+        .get(ctrl.getCharacter)
+
+    /** delete a Black Panther character */
+    router
+        .route('/blackpanther/:id')
+        .delete(ctrl.deleteCharacter)
+
+    /** update a Black Panther character */
+    router
+        .route('/blackpanther/:id')
+        .put(ctrl.updateCharacter)
+}
+```
+Above we have defined two basic routes(`/blackoanther`, and `/blackpanther/:id`) with different methods.
+
+As we can see, we required the controller so each of the routes methods can call it’s respective handler function.
+
+Finally, we open up our index.js file. Here, we bind the components into one. We import the routes function exposed to us in `routes/route.js`, and we pass `express.ROuter()` as an argument to our `routes` function. Next, we connect to a `MonogDB` instance and, then call the `app.listeners()` to start the server.
+
+```js
+const express = require('express')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+
+const app = express()
+const router = express.Router()
+const routes = require('./routes/route')
+
+const url = process.env.MONGODB_URI || "mongodb://localhost:27017/blackpanther"
+
+mongoose.connect(url, {
+    //useMongoClient: true
+})
+
+routes(router)
+app.use(bodyParser.json())
+app.use('/api/v1', router)
+
+const port = process.env.PORT || 1000
+
+app.listen(port, () => {
+    console.log(`Black Panther API v1: ${port}`)
+})
+```
+
 ## Add mLab datastore to our API endpoints.
+
+All these while, we have been using a local instance of MongoDB datastore. We will be deploying and accessing our app on a cloud-cloud computing infrasstructure, there will be no local datastore present. So inorder to persist our data we are going to choose a DaaS platform, [mLab](https://mlab.com).
+
+* Go to [mLab](https://mlab.com)
+* Create an account, if you dont already have one
+* Go to your dashboard, create a new database.
+* Copy the database connection URL
+
+Now that we have our mLab connection URL string, we will now modify **index.js** file:
+
+```js
+...
+const url = process.env.MONGODB_URI || "mongodb://<DB_USER>:<DB_PASSWORD>@ds147072.mlab.com:47072/<DB_NAME>"
+...
+```
+
 ## Test our app locally via **cURL**.
-## Deploy our app.
-## Test our deployed app (**cURL**).
-## Conclusion.
+
+To test our app in our local machine. Run the following command to start the server:
+
+```sh
+ node .
+ ```
+It will display something like this on your terminal:
+
+```
+node .
+Black Panther API v1: 1000
+```
+
+OK, now our **Black Panther** API is up and running, we can use `cURL` to test the APIs:
+
+**Note**: Before running any of the below `cURL` commands, you have to start your MongoDB server first. Make sure your `MongoDB` installation path is in the global path (`PATH` for Windows users). Run this command to start the `MongoDB` server : `mongod`.
+
+#### Black Panther POST Test - This creates a new Black Panther character
+
+```sh
+curl --request POST \
+  --url http://localhost:1000/api/v1/blackpanther \
+  --header 'content-type: application/json' \
+  --data '{"alias":"tchalla","occupation":"King of Wakanda","gender":"male","place_of_birth":"Wakanda","abilities":"enhanced strength","played_by":"Chadwick Boseman"}'
+```
+
+You can go on and write **cURL** commands for other API endpoints.
+
+## Deploy our app
+
+Now, our `Nodejs` app is ready for deployment, but before we do that, there are configurations we have to tweak and add. First we are going to create a `app.yaml` file to our project.
+
+The `app.yaml` file is a runtime configuration for App Engine environment. `app.yaml` enables us to configure our App Engine environment (either Nodejs, GO, PHP, Ruby, Python, .NET, or Java Runtime) prior to deployment.
+
+With `app.yaml` file, we can do the following:
+
+* Allocate network and disk resources
+* Select the flexible environment
+* Select the number of cpu cores to be allocated
+* Specify memory_gb (RAM) size.
+
+The list is long, you can go to [Configuring your app with app.yaml](https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml) to see the full configuration settings curated by Google.
+
+OK, let's create `app.yaml` file in our project:
+
+```sh
+touch app.yaml
+```
+Open the `app.yaml` file, and add the following contents:
+
+```yaml
+runtime: nodejs
+env: flex
+
+manual_scaling:
+  instances: 1
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+```
+
+Looking at the above configuration, we are telling the App Engine that our app will run on the Nodejs Runtime environment, also the environment should be set to flexible.
+
+Running on flexible environment incurs cost, so we scaled down to reduce costs by addding:
+
+```yaml
+...
+manual_scaling:
+  instances: 1
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+```
+Here, we are specifying only one instance, one cpu core, 0.5G RAM, and 10G disk size.
+
+This is ideal for testing purposes and are not for production use.
+
+Next, we have to add a `start` in the `scripts` section of our `package.json`, this is used by the Nodejs Runtime to start our application when deployed.
+
+Without the start the Nodejs Runtime nodejs checker will throw "Application Detection failed: Error: nodejs checker: Neither start in the scripts section in the package,json nor server,js were found" error.
+
+Let's open up the `package.json` and add `start` in the `scripts` key:
+
+```json
+...
+    "scripts": {
+        "start": "node .",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+...
+```
+
+After this, we are now all set to deploy. To deploy our app, run this command:
+
+```sh
+gcloud app deploy
+```
+
+## Test our deployed app (**cURL**)
+
+To test our deployed Nodejs app API, we are going to use the **target url** Google App Engine gave us.
+
+```sh
+curl --request POST \
+  --url http://YOUR_TARGET_URL.appspot.com/api/v1/blackpanther \
+  --header 'content-type: application/json' \
+  --data '{"alias":"tchalla","occupation":"King of Wakanda","gender":"male","place_of_birth":"Wakanda","abilities":"enhanced strength","played_by":"Chadwick Boseman"}'
+```
+
+With **cURL** we sent a `POST` request and a **Black Panther** character payload to our deployed Nodejs app, using the **target url** as our **URL**.
+
+Our API endpoint, executes the POST function, saves the payload to our **mLab** database and sends the result back to us:
+
+
+```sh
+{
+    "alias":"tchalla",
+    "occupation":"King of Wakanda",
+    "gender":"male",
+    "place_of_birth":"Wakanda",
+    "abilities":"enhanced strength",
+    "played_by":"Chadwick Boseman","_id":"5aa3a3905cd0a90010c3e1d9",
+    "__v":0
+}
+```
+
+**Congratulations !!!** We have deployed our first Nodejs app to Google App Engine.
+
+## Conclusion
+
+We have seen in this article, how easy and stress-free Google App Engine make our lives. Also, how with only few commands setup a powerful Runtime engine and deploy your app on it. No need to think about scaling, resources, bandwidth and the rest.
+
+App Engine does those thinking for you.
+
+
