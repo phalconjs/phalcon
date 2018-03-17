@@ -14,6 +14,9 @@
 let reducers = {}
 let reducers_state = {}
 
+/**
+ * 
+ */
 function getState() {
 
 }
@@ -21,6 +24,7 @@ function getState() {
 /**
  * type: "", payload
  * { type: 'LOAD_ARTICLES', article: {} }
+ * @param {*} action 
  */
 function dispatch(action) {
     console.log(action)
@@ -33,21 +37,54 @@ function dispatch(action) {
         let state = element.red(undefined, action)
         console.log('displayin state...')
         console.log(state)
-            //key({}, action)
-            //element({}, action)
+
+        //key({}, action)
+        //element({}, action)
     }
 }
 
-function subscribe() {
+/**
+ * 
+ * @param {*} subscriber 
+ */
+function subscribe(subscriber) {
 
 }
 
+/**
+ * 
+ * @param {*} _r 
+ */
+function initializeState(_r) {
+    let INIT_STATE = undefined
+
+}
+
+/**
+ * 
+ * @param {*} fn 
+ */
 function createStore(fn) {
     //console.log(fn)
-    reducers.fn = fn
-        //console.log(reducers)
+    //reducers.fn = fn
+    //console.log(reducers)
+    for (var key in fn) {
+        let reducer = fn[key]
+        initializeState(reducer)
+    }
 }
 
+/**
+ * 
+ * @param {*} reducers 
+ */
+function combineReducers(_reducers) {
+    reducers = _reducers
+    return reducers
+}
+
+
+/** index.html */
 const initialState = {
     articles: [],
     article: {}
@@ -64,18 +101,10 @@ function red(state = initialState, action) {
             return state
     }
 }
-createStore({ red })
+
+let _reducer = combineReducers({ red })
+let store = createStore(_reducer)
 dispatch({ type: '_LOAD_ARTICLES', article: {} })
-
-/**
- * {
- *  reducer: (state, action)=>{}
- * }
- * @param {*} obj 
- */
-function combineReducers(obj) {
-
-}
 
 
 

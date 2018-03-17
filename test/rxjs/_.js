@@ -31,18 +31,10 @@ class Observer {
 
     constructor() {
         this.stream = []
-        this.subscribers = []
-        this.fn = null
-        class _Emitter extends EventEmitter {}
-        const __Emitter = new _Emitter()
-        this._emitter = __Emitter
-        this._emitter.on('start', function() {
-
-        })
     }
 
     /** push values to stream */
-    next(v) {
+    onNext(v) {
         this.stream.push(v)
     }
 
@@ -56,9 +48,6 @@ class Observer {
     flushStream() {
         this.stream = []
     }
-    startEmit() {
-        this._emitter.emit('start')
-    }
 }
 
 class Observable {
@@ -66,19 +55,13 @@ class Observable {
 
     constructor(fn) {
         this.observer = new Observer()
-
-        //fn(this.observer)
-
-        this._subscribe = fn
-
-        //this.fn = fn
+            //fn(this.observer)
+        this.fn = fn
     }
 
     static create(fn) {
         return new Observable(fn)
     }
-
-    _subscribe() {}
 
     static from(array) {
         return new Observable()
@@ -110,44 +93,27 @@ class Observable {
      * @param {*} observer 
      */
     subscribe(_observer) {
-        //this.observer.flushStream()
-        //this.fn(this.observer)
-        this._subscribe(_observer)
-
-        //this.observer.startEmit()
-
-        /*this.observer.stream.forEach((s) => {
+        this.observer.flushStream()
+        this.fn(this.observer)
+        this.observer.stream.forEach((s) => {
             _observer.next(s)
-        })*/
-
+        })
     }
 }
 
 let source = Observable.create(function(observer) {
-    //console.log('Hello')
-    observer.next(9)
-    observer.next(90)
-    observer.next(900)
+    console.log('Hello')
+    observer.onNext(9)
+    observer.onNext(90)
+    observer.onNext(900)
     setTimeout(() => {
-        observer.next(10)
-            //console.log('timeout', observer)
+        observer.onNext(10)
+        console.log('timeout', observer)
     }, 1000)
 })
 
 source.subscribe({
     next: x => console.log(x)
-})
-
-source.subscribe({
-    next: x => console.log(`Hello: ${x}`)
-})
-console.log('end')
-
-/**
- * store the stream in observer
- * register subscriber
- * start emiting stream
- */ next: x => console.log(x)
 })
 
 source.subscribe({
